@@ -1,0 +1,2033 @@
+
+
+--- FSD-main/Slip_10_Q1.js ---
+
+
+const http=require('http');
+http.createServer((req,resp)=>{
+    var str="Hello World!";
+    str=str.toUpperCase();
+    resp.write("the Upper Case word is :"+str);
+    resp.end();
+}).listen(3000,()=>{
+    console.log("server is running on the port 3000");
+});
+
+--- FSD-main/Slip_10_Q2.html ---
+
+<!DOCTYPE html>
+<html lang="en" ng-app="validationApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Username Validation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="ValidationController">
+
+    <h2>Username and Password Validation</h2>
+
+    <form ng-submit="validateForm()">
+        <label>Username:</label>
+        <input type="text" ng-model="username"><br><br>
+
+        <label>Password:</label>
+        <input type="password" ng-model="password"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p style="color: green;" ng-if="message">{{message}}</p>
+
+    <script>
+        var app = angular.module('validationApp', []);
+        app.controller('ValidationController', function($scope) {
+            $scope.username = "";
+            $scope.password = "";
+            $scope.message = "";
+
+            $scope.validateForm = function() {
+                if (!$scope.username) {
+                    alert("Enter username");
+                } else if ($scope.username.length < 3) {
+                    alert("Username is too short");
+                } else if (!$scope.password || $scope.password.length < 8) {
+                    alert("Password must be at least 8 characters");
+                } else {
+                    $scope.message = "Valid username";
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Username Validation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="myCtrl">
+
+    <input type="text" placeholder="Enter username" ng-model="username"><br><br>
+    <input type="password" placeholder="Enter password" ng-model="password"><br><br>
+    <button ng-click="check()">Submit</button>
+
+    <p>{{message}}</p>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.check = function() {
+                if (!$scope.username) {
+                    alert("Enter username");
+                } else if ($scope.username.length < 3) {
+                    alert("Username is too short");
+                } else if (!$scope.password || $scope.password.length < 8) {
+                    alert("Password must be at least 8 characters");
+                } else {
+                    $scope.message = "Valid username";
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+-->
+
+--- FSD-main/Slip_11_Q1.js ---
+
+//module.js
+function div(a, b) {
+    return a / b;
+}
+
+function sub(a, b) {
+    return a - b;
+}
+
+function add(a, b) {
+    return a + b;
+}
+
+function mul(a, b) {
+    return a * b;
+}
+
+module.exports = {div,sub,add,mul};
+
+
+// addition.js
+
+const http = require('http');
+const module1 = require('./module'); 
+
+http.createServer(function (req, resp) {
+
+    resp.write("Addition: " + module1.add(10,20)+"\n");
+     
+    resp.write("Subtraction: " + module1.sub(10,20)+"\n"); 
+    resp.write("Multiplication: " + module1.mul(10,20)+"\n"); 
+    resp.write("Division: " + module1.div(10,20)+"\n"); 
+    resp.end();
+}).listen(3003);
+    
+
+
+////
+/////////////
+/////////////////////////
+// math.js - Create a custom math module
+
+module.exports = {
+    add: function(a, b) {
+        return a + b;
+    },
+    subtract: function(a, b) {
+        return a - b;
+    },
+    multiply: function(a, b) {
+        return a * b;
+    },
+    divide: function(a, b) {
+        if (b !== 0) {
+            return a / b;
+        } else {
+            return 'Error: Division by zero';
+        }
+    }
+};
+
+
+
+
+
+
+
+// server.js - Simple Web Server to use math module
+
+const http = require('http');
+const math = require('./math');  // Import the math module
+
+const hostname = '127.0.0.1';
+const port = 3000;
+
+// Create the server
+const server = http.createServer((req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/html');
+
+    // Perform some math operations
+    const num1 = 10;
+    const num2 = 5;
+
+    const addition = math.add(num1, num2);
+    const subtraction = math.subtract(num1, num2);
+    const multiplication = math.multiply(num1, num2);
+    const division = math.divide(num1, num2);
+
+    // Display results on the web page
+    res.end(`
+        <html>
+            <head>
+                <title>Math Operations</title>
+            </head>
+            <body>
+                <h1>Arithmetic Operations Results</h1>
+                <p>${num1} + ${num2} = ${addition}</p>
+                <p>${num1} - ${num2} = ${subtraction}</p>
+                <p>${num1} * ${num2} = ${multiplication}</p>
+                <p>${num1} / ${num2} = ${division}</p>
+            </body>
+        </html>
+    `);
+});
+
+// Start the server
+server.listen(port, hostname, () => {
+    console.log(`Server running at http://${hostname}:${port}/`);
+});
+
+
+--- FSD-main/Slip_11_Q2.html ---
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Validation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="myCtrl">
+
+    <h3>Enter Your Details</h3>
+
+    Name: <input type="text" ng-model="name"><br><br>
+    Mobile: <input type="text" ng-model="mobile"><br><br>
+    Pin Code: <input type="text" ng-model="pincode"><br><br>
+    Email: <input type="text" ng-model="email"><br><br>
+    Address: <input type="text" ng-model="address"><br><br>
+
+    <button ng-click="validate()">Submit</button>
+
+    <p>{{message}}</p>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+
+            $scope.validate = function() {
+                // Name: only characters
+                if (!$scope.name || !/^[a-zA-Z ]+$/.test($scope.name)) {
+                    alert("Name should contain characters only");
+                    return;
+                }
+
+                // Mobile: exactly 10 digits
+                if (!$scope.mobile || !/^\d{10}$/.test($scope.mobile)) {
+                    alert("Mobile number must be 10 digits");
+                    return;
+                }
+
+                // Pin code: exactly 6 digits
+                if (!$scope.pincode || !/^\d{6}$/.test($scope.pincode)) {
+                    alert("Pin code must be 6 digits");
+                    return;
+                }
+
+                // Email: must contain exactly one @ and one .
+                let atCount = ($scope.email.match(/@/g) || []).length;
+                let dotCount = ($scope.email.match(/\./g) || []).length;
+                if (atCount !== 1 || dotCount !== 1) {
+                    alert("Email must contain exactly one '@' and one '.'");
+                    return;
+                }
+
+                // Address check
+                if ($scope.address !== "SPPU M.Sc. Computer Science Syllabus 2023-24") {
+                    alert("Address must be: SPPU M.Sc. Computer Science Syllabus 2023-24");
+                    return;
+                }
+
+                // All ok
+                $scope.message = "All details are valid!";
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_12_Q1.js ---
+
+
+
+--- FSD-main/Slip_12_Q2.html ---
+
+<!DOCTYPE html>
+<html ng-app="productApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="productCtrl">
+
+    <h3>Enter Product Details</h3>
+
+    Product Name: <input type="text" ng-model="productName"><br>
+    <span ng-show="nameError" style="color:red;">Invalid product name</span><br><br>
+
+    Price (₹): <input type="number" ng-model="price"><br>
+    <span ng-show="priceError" style="color:red;">Price must be between ₹100 and ₹10,000</span><br><br>
+
+    <button ng-click="submit()">Add Product</button><br><br>
+
+    <p ng-show="successMessage" style="color:green;">Product added successfully!</p>
+
+    <script>
+        var app = angular.module('productApp', []);
+        app.controller('productCtrl', function($scope) {
+            $scope.submit = function() {
+                $scope.nameError = false;
+                $scope.priceError = false;
+                $scope.successMessage = false;
+
+                // Validate product name (only letters and spaces)
+                if (!$scope.productName || !/^[a-zA-Z ]+$/.test($scope.productName)) {
+                    $scope.nameError = true;
+                    return;
+                }
+
+                // Validate price (100 to 10000)
+                if (!$scope.price || $scope.price < 100 || $scope.price > 10000) {
+                    $scope.priceError = true;
+                    return;
+                }
+
+                // If valid
+                $scope.successMessage = true;
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_13_Q1.js ---
+
+const events=require("events");
+const eventEmitter=new events.EventEmitter();
+
+eventEmitter.on('even',(num)=>{
+        console.log(`Even Number are:${num}`);
+});
+
+eventEmitter.on('odd',(num)=>{
+    console.log(`odd Number are:${num}`);
+});
+
+for(let i=1;i<=200;i++)
+{
+    if(i%2 === 0)
+    {
+        eventEmitter.emit('even',i);
+    }
+    else{
+        eventEmitter.emit('odd',i);
+        
+    }
+}
+
+--- FSD-main/Slip_13_Q2.js ---
+
+const express = require('express');
+const mongoose = require('mongoose');
+const app = express();
+
+mongoose.connect('mongodb://127.0.0.1:27017/bankDetails', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log("MongoDB connected"))
+  .catch(err => console.log("MongoDB connection error: ", err));
+
+const bankSchema = new mongoose.Schema({
+  bank_no: String,
+  bank_name: String,
+  address: String,
+  ifsc_code: String
+});
+const Bank = mongoose.model('Bank', bankSchema);
+
+const insertSampleData = async () => {
+  const count = await Bank.countDocuments();
+  if (count === 0) {
+    await Bank.insertMany([
+      { bank_no: '001', bank_name: 'Bank of India', address: 'Mumbai', ifsc_code: 'BKID000001' },
+      { bank_no: '002', bank_name: 'SBI', address: 'Delhi', ifsc_code: 'SBIN000002' },
+      { bank_no: '003', bank_name: 'ICICI', address: 'Chennai', ifsc_code: 'ICIC000003' }
+    ]);
+    console.log("Sample data inserted.");
+  }
+};
+
+insertSampleData();
+
+app.get('/', async (req, res) => {
+  try {
+    const banks = await Bank.find();
+    let html = `
+      <html>
+        <head>
+          <title>Bank Details</title>
+        </head>
+        <body>
+          <h1>Bank Details</h1>
+          <table border="1">
+            <tr>
+              <th>Bank No</th>
+              <th>Bank Name</th>
+              <th>Address</th>
+              <th>IFSC Code</th>
+            </tr>`;
+
+    banks.forEach(bank => {
+      html += `
+        <tr>
+          <td>${bank.bank_no}</td>
+          <td>${bank.bank_name}</td>
+          <td>${bank.address}</td>
+          <td>${bank.ifsc_code}</td>
+        </tr>`;
+    });
+
+    html += `
+          </table>
+        </body>
+      </html>
+    `;
+
+    res.send(html);
+  } catch (err) {
+    res.send('Error fetching bank details');
+  }
+});
+
+app.listen(3000, () => {
+  console.log('Server running on http://localhost:3000');
+});
+
+
+--- FSD-main/Slip_14_Q1.js ---
+
+
+const fs = require('fs');
+const http = require('http');
+
+// Create the web server
+http.createServer((req, res) => {
+    if (req.method === 'GET') {
+        // Serve the HTML form when the page is accessed via GET
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(`
+            <html>
+            <body>
+                <h2>Append Content from File 1 to File 2</h2>
+                <form action="/" method="POST">
+                    <label for="file1">Enter the first file name:</label><br>
+                    <input type="text" id="file1" name="file1"><br><br>
+                    <label for="file2">Enter the second file name:</label><br>
+                    <input type="text" id="file2" name="file2"><br><br>
+                    <input type="submit" value="Submit">
+                </form>
+            </body>
+            </html>
+        `);
+    } else if (req.method === 'POST') {
+        // Handle the form submission
+        let body = '';
+
+        req.on('data', chunk => {
+            body += chunk;
+        });
+
+        req.on('end', () => {
+            const params = new URLSearchParams(body);
+            const file1 = params.get('file1');
+            const file2 = params.get('file2');
+
+            // Read the first file and append it to the second file
+            fs.readFile(file1, 'utf8', (err, data) => {
+                if (err) {
+                    res.writeHead(500, { 'Content-Type': 'text/html' });
+                    res.end('<h3>Error reading the first file!</h3>');
+                    return;
+                }
+
+                fs.appendFile(file2, "\n" + data, (err) => {
+                    if (err) {
+                        res.writeHead(500, { 'Content-Type': 'text/html' });
+                        res.end('<h3>Error appending to the second file!</h3>');
+                    } else {
+                        res.writeHead(200, { 'Content-Type': 'text/html' });
+                        res.end(`<h3>Content of '${file1}' appended to '${file2}' successfully!</h3>`);
+                    }
+                });
+            });
+        });
+    }
+}).listen(1000, () => {
+    console.log("Server is running on http://localhost:1000");
+});
+
+--- FSD-main/Slip_14_Q2.html ---
+
+<!DOCTYPE html>
+<html ng-app="marksApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Marks</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="marksCtrl">
+
+    <h3>Enter Marks for 5 Subjects</h3>
+
+    Subject 1: <input type="number" ng-model="marks1"><br><br>
+    Subject 2: <input type="number" ng-model="marks2"><br><br>
+    Subject 3: <input type="number" ng-model="marks3"><br><br>
+    Subject 4: <input type="number" ng-model="marks4"><br><br>
+    Subject 5: <input type="number" ng-model="marks5"><br><br>
+
+    <button ng-click="calculate()">Calculate</button><br><br>
+
+    <h4>Total Marks: {{total}}</h4>
+    <h4>Average Marks: {{average}}</h4>
+
+    <script>
+        var app = angular.module('marksApp', []);
+
+        // Service to calculate total and average
+        app.service('marksService', function() {
+            this.calculateTotal = function(marks) {
+                return marks.reduce((acc, mark) => acc + mark, 0);
+            };
+            
+            this.calculateAverage = function(total) {
+                return total / 5;
+            };
+        });
+
+        // Controller to handle user input and display results
+        app.controller('marksCtrl', function($scope, marksService) {
+            $scope.calculate = function() {
+                var marks = [$scope.marks1, $scope.marks2, $scope.marks3, $scope.marks4, $scope.marks5];
+                
+                var total = marksService.calculateTotal(marks);
+                $scope.total = total;
+                $scope.average = marksService.calculateAverage(total);
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_15_Q1.js ---
+
+
+const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+const server = http.createServer((req, res) => {
+    const filePath = path.join(__dirname, 'index.html');
+
+    fs.readFile(filePath, (err, content) => {
+        if (err) {
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end('Error loading the page.');
+        } else {
+            res.writeHead(200, { 'Content-Type': 'text/html' });
+            res.end(content);
+        }
+    });
+});
+
+server.listen(3300, () => {
+    console.log('Server is running at http://localhost:3300/');
+});
+
+
+
+--- FSD-main/Slip_15_Q2.js ---
+
+const express = require('express');
+const mongoose = require('mongoose');
+const app = express();
+
+// MongoDB connection URI
+mongoose.connect('mongodb://127.0.0.1:27017/employeeDB', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}).then(() => console.log("MongoDB connected"))
+  .catch(err => console.log("MongoDB connection error: ", err));
+
+// Employee schema and model
+const employeeSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  position: String,
+  salary: Number
+});
+const Employee = mongoose.model('Employee', employeeSchema);
+
+// Sample data insertion (only run once if needed)
+const insertSampleData = async () => {
+  const count = await Employee.countDocuments();
+  if (count === 0) {
+    await Employee.insertMany([
+      { name: 'John Doe', age: 30, position: 'Developer', salary: 60000 },
+      { name: 'Jane Smith', age: 25, position: 'Designer', salary: 50000 },
+      { name: 'David Brown', age: 40, position: 'Manager', salary: 80000 }
+    ]);
+    console.log("Sample data inserted.");
+  }
+};
+
+// Insert sample data on startup
+insertSampleData();
+
+// Route to fetch and display employee details
+app.get('/', async (req, res) => {
+  try {
+    const employees = await Employee.find();
+    let html = `
+      <html>
+        <head>
+          <title>Employee Details</title>
+          <style>
+            table {
+              width: 80%;
+              margin: 20px auto;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 12px;
+              text-align: left;
+              border: 1px solid #ddd;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          <h1 style="text-align:center;">Employee Details</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Position</th>
+                <th>Salary</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+    // Append rows for each employee
+    employees.forEach(employee => {
+      html += `
+        <tr>
+          <td>${employee.name}</td>
+          <td>${employee.age}</td>
+          <td>${employee.position}</td>
+          <td>${employee.salary}</td>
+        </tr>`;
+    });
+
+    html += `
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `;
+
+    // Send the HTML response
+    res.send(html);
+  } catch (err) {
+    res.send('Error fetching employee details');
+  }
+});
+
+// Start the Express server
+app.listen(6700, () => {
+  console.log('Server running on 6700 port');
+});
+
+
+--- FSD-main/Slip_16_Q1.js ---
+
+const { MongoClient } = require("mongodb");
+const uri = "mongodb://127.0.0.1:27017";  // Your MongoDB URI
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    // Connect to the MongoDB server
+    await client.connect();
+    const db = client.db("mydb");  // Replace with your database name
+    const collection = db.collection("bank");  // Replace with your collection name
+
+    // Select all records from the "bank" collection
+    const allRecords = await collection.find().toArray();
+    console.log("All Banks:");
+    console.table(allRecords);
+
+    // Delete a bank record by name (you can replace 'XYZ Bank' with the actual bank name you want to delete)
+    const bankNameToDelete = "XYZ Bank";  // Replace with the bank name you want to delete
+    const deleteResult = await collection.deleteOne({ name: bankNameToDelete });
+
+    if (deleteResult.deletedCount === 1) {
+      console.log(`Bank with name '${bankNameToDelete}' deleted successfully`);
+    } else {
+      console.log(`No bank found with the name '${bankNameToDelete}'`);
+    }
+
+  } catch (err) {
+    console.error("Error:", err);
+  } finally {
+    // Close the MongoDB connection
+    await client.close();
+  }
+}
+
+run();
+
+
+--- FSD-main/Slip_16_Q2.js ---
+
+const express = require('express');
+const { MongoClient } = require('mongodb');
+const bodyParser = require('body-parser');
+
+const app = express();
+const port = 3000;
+
+// MongoDB URI and database name
+const uri = 'mongodb://127.0.0.1:27017';
+const dbName = 'userRegistration';
+
+// Create a MongoDB client
+let db;
+let userCollection;
+
+// Middleware to parse form data
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// MongoDB connection
+MongoClient.connect(uri, { useUnifiedTopology: true })
+  .then(client => {
+    console.log('Connected to MongoDB');
+    db = client.db(dbName);
+    userCollection = db.collection('users');
+  })
+  .catch(err => {
+    console.error('Error connecting to MongoDB:', err);
+  });
+
+// Serve HTML form on the root route
+app.get('/', (req, res) => {
+  res.send(`
+    <html>
+      <head><title>User Registration</title></head>
+      <body>
+        <h1>User Registration Form</h1>
+        <form action="/register" method="POST">
+          <label for="name">Name:</label><br>
+          <input type="text" id="name" name="name" required><br><br>
+          <label for="email">Email:</label><br>
+          <input type="email" id="email" name="email" required><br><br>
+          <label for="password">Password:</label><br>
+          <input type="password" id="password" name="password" required><br><br>
+          <input type="submit" value="Register">
+        </form>
+      </body>
+    </html>
+  `);
+});
+
+// Handle the form submission
+app.post('/register', async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+    
+    // Insert user data into MongoDB collection
+    const result = await userCollection.insertOne({ name, email, password });
+    
+    // Display success message after inserting data
+    res.send(`
+      <html>
+        <head><title>Registration Success</title></head>
+        <body>
+          <h1>Registration Successful!</h1>
+          <p>Thank you for registering, ${name}!</p>
+          <p>Your email is: ${email}</p>
+          <p>Your password is securely stored in our database.</p>
+          <a href="/">Go back to registration page</a>
+        </body>
+      </html>
+    `);
+  } catch (err) {
+    console.error('Error registering user:', err);
+    res.send('<h1>Error registering user. Please try again later.</h1>');
+  }
+});
+
+// Start the Express server
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+});
+
+
+/*
+npm install express mongodb body-parser
+
+*/
+
+--- FSD-main/Slip_17_Q2.html ---
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS Data Binding & Event Handling</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body>
+
+    <!-- Controller 1: One-way Data Binding -->
+    <div ng-controller="oneWayCtrl">
+        <h3>One-way Data Binding</h3>
+        <p>Message from Controller 1: {{message}}</p>
+    </div>
+
+    <!-- Controller 2: Two-way Data Binding -->
+    <div ng-controller="twoWayCtrl">
+        <h3>Two-way Data Binding</h3>
+        <input type="text" ng-model="name">
+        <p>Hello, {{name}}!</p>
+    </div>
+
+    <!-- Controller 3: Event Handling -->
+    <div ng-controller="eventCtrl">
+        <h3>Event Handling</h3>
+        <button ng-click="changeMessage()">Click me to change the message</button>
+        <p>{{eventMessage}}</p>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        // Controller 1: One-way Data Binding
+        app.controller('oneWayCtrl', function($scope) {
+            $scope.message = "This is a message from Controller 1!";
+        });
+
+        // Controller 2: Two-way Data Binding
+        app.controller('twoWayCtrl', function($scope) {
+            $scope.name = "Student";  // Initially set to "Student"
+        });
+
+        // Controller 3: Event Handling
+        app.controller('eventCtrl', function($scope) {
+            $scope.eventMessage = "Click the button to change this message.";
+            $scope.changeMessage = function() {
+                $scope.eventMessage = "Message changed successfully!";
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_18_Q1.html ---
+
+
+<!DOCTYPE html>
+<html ng-app="locationApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Location of Current Web Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="locationCtrl">
+
+    <h3>Your Current Location</h3>
+    <button ng-click="getLocation()">Get Location</button><br><br>
+
+    <p ng-show="latitude && longitude">
+        Latitude: {{latitude}}<br>
+        Longitude: {{longitude}}
+    </p>
+
+    <p ng-show="errorMessage">{{errorMessage}}</p>
+
+    <script>
+        var app = angular.module('locationApp', []);
+
+        app.controller('locationCtrl', function($scope) {
+            $scope.getLocation = function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        $scope.$apply(function() {
+                            $scope.latitude = position.coords.latitude;
+                            $scope.longitude = position.coords.longitude;
+                            $scope.errorMessage = null;
+                        });
+                    }, function(error) {
+                        $scope.$apply(function() {
+                            if (error.code == 1) {
+                                $scope.errorMessage = "Permission denied. Please allow location access.";
+                            } else if (error.code == 2) {
+                                $scope.errorMessage = "Location unavailable.";
+                            } else {
+                                $scope.errorMessage = "An unknown error occurred.";
+                            }
+                        });
+                    });
+                } else {
+                    $scope.errorMessage = "Geolocation is not supported by this browser.";
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_18_Q2.js ---
+
+const express = require('express');
+const MongoClient = require('mongodb').MongoClient;
+const bodyParser = require('body-parser');
+const app = express();
+
+// MongoDB URI
+const url = 'mongodb://localhost:27017';
+const dbName = 'productDB';
+
+// Use bodyParser middleware to parse POST request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Route to fetch and display product details in an HTML table
+app.get('/', async (req, res) => {
+  const client = new MongoClient(url, { useUnifiedTopology: true });
+
+  try {
+    await client.connect();
+    console.log('Connected to MongoDB');
+    
+    const db = client.db(dbName);
+    const collection = db.collection('products');
+    
+    // Fetch all products from the "products" collection
+    const products = await collection.find({}).toArray();
+    
+    let html = `
+      <html>
+        <head>
+          <title>Product Details</title>
+          <style>
+            table {
+              width: 80%;
+              margin: 20px auto;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 12px;
+              text-align: left;
+              border: 1px solid #ddd;
+            }
+            th {
+              background-color: #f2f2f2;
+            }
+          </style>
+        </head>
+        <body>
+          <h1 style="text-align:center;">Product Details</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+              </tr>
+            </thead>
+            <tbody>`;
+
+    // Append each product to the table
+    products.forEach(product => {
+      html += `
+        <tr>
+          <td>${product.product_id}</td>
+          <td>${product.product_name}</td>
+          <td>${product.category}</td>
+          <td>${product.price}</td>
+          <td>${product.stock}</td>
+        </tr>`;
+    });
+
+    html += `
+            </tbody>
+          </table>
+        </body>
+      </html>
+    `;
+
+    // Send the HTML response
+    res.send(html);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send('Error fetching product details');
+  } finally {
+    // Close MongoDB connection
+    await client.close();
+  }
+});
+
+// Start the Express server
+app.listen(3000, () => {
+  console.log('Server running at http://localhost:3000');
+});
+
+
+--- FSD-main/Slip_19_Q1.js ---
+
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.get('/', (req, res) => {
+    res.send(`
+        <form method="post" action="/register">
+            <label>Name:</label><br>
+            <input type="text" name="name"><br>
+            <label>Email:</label><br>
+            <input type="text" name="email"><br>
+            <label>Age:</label><br>
+            <input type="number" name="age"><br>
+            <button type="submit">Register</button>
+        </form>
+    `);
+});
+
+app.post('/register', (req, res) => {
+    const { name, email, age } = req.body;
+
+    if (!name || !email || !age) {
+        return res.send("All fields are required!");
+    }
+
+    // Basic email format check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        return res.send("Invalid email format!");
+    }
+
+    if (age <= 0) {
+        return res.send("Age must be a positive number!");
+    }
+
+    res.send(`Employee Registered Successfully!<br>Name: ${name}<br>Email: ${email}<br>Age: ${age}`);
+});
+
+app.listen(8800, () => {
+    console.log('Server is running on http://localhost:8800');
+});
+
+
+/*
+
+npm init -y
+npm install express body-parser
+
+*/
+
+--- FSD-main/Slip_19_Q2.html ---
+
+<!DOCTYPE html>
+<html ng-app="mathApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Arithmetic Operations</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="mathCtrl">
+
+    <h3>Enter Two Numbers</h3>
+    Number 1: <input type="number" ng-model="num1"><br><br>
+    Number 2: <input type="number" ng-model="num2"><br><br>
+
+    <button ng-click="calculate()">Calculate</button><br><br>
+
+    <h4>Results:</h4>
+    Addition: {{additionResult}}<br>
+    Multiplication: {{multiplicationResult}}
+
+    <script>
+        // Create the module
+        var app = angular.module('mathApp', []);
+
+        // Service to handle arithmetic operations
+        app.service('mathOperation', function() {
+            this.add = function(a, b) {
+                return a + b;
+            };
+
+            this.multiply = function(a, b) {
+                return a * b;
+            };
+        });
+
+        // Controller to interact with the view
+        app.controller('mathCtrl', function($scope, mathOperation) {
+            $scope.calculate = function() {
+                // Perform arithmetic operations using the service
+                $scope.additionResult = mathOperation.add($scope.num1, $scope.num2);
+                $scope.multiplicationResult = mathOperation.multiply($scope.num1, $scope.num2);
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_1_Q1.js ---
+
+const http = require('http');
+
+const server = http.createServer((req, res) => {
+  const str = "Full Stack!";
+  const reversed = str.split('').reverse().join('');
+  const upper = str.toUpperCase();
+  const lower = str.toLowerCase();
+
+  res.writeHead(200, { 'Content-Type': 'text/plain' });
+  res.write(`Original String: ${str}\n`);
+  res.write(`Reversed String: ${reversed}\n`);
+  res.write(`Uppercase: ${upper}\n`);
+  res.write(`Lowercase: ${lower}\n`);
+  res.end();
+}).listen(2222, () => {
+  console.log('Server is running at http://localhost:2222');
+});
+
+
+--- FSD-main/Slip_1_Q2.html ---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <style>
+        .error { color: red; }
+    </style>
+</head>
+<body ng-app="studentApp" ng-controller="studentController">
+
+    <h1>Student Registration Form</h1>
+
+    <form name="registrationForm" ng-submit="submitForm()" novalidate>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" ng-model="student.firstName" name="firstName" ng-pattern="/^[A-Za-z]+$/" required>
+        <span class="error" ng-show="registrationForm.firstName.$touched && registrationForm.firstName.$invalid">First name must contain only alphabets.</span><br><br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" ng-model="student.lastName" name="lastName" ng-pattern="/^[A-Za-z]+$/" required>
+        <span class="error" ng-show="registrationForm.lastName.$touched && registrationForm.lastName.$invalid">Last name must contain only alphabets.</span><br><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" ng-model="student.age" name="age" min="18" max="50" required>
+        <span class="error" ng-show="registrationForm.age.$touched && registrationForm.age.$invalid">Age must be between 18 and 50.</span><br><br>
+
+        <button type="submit" ng-disabled="registrationForm.$invalid">Submit</button>
+    </form>
+
+    <script>
+        angular.module("studentApp", [])
+            .controller("studentController", function($scope) {
+                // Function to handle form submission
+                $scope.submitForm = function() {
+                    if ($scope.registrationForm.$valid) {
+                        alert("Form Submitted Successfully!");
+                    } else {
+                        alert("Please fill out the form correctly.");
+                    }
+                };
+            });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_20_Q1.html ---
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="myCtrl">
+
+    <!-- ng-model -->
+    Name: <input type="text" ng-model="name"><br>
+    <p>{{name}}</p>
+
+    <!-- ng-repeat -->
+    <ul>
+        <li ng-repeat="name in names">{{name}}</li>
+    </ul>
+    <button ng-click="addName()">Add Name</button><br>
+
+    <!-- ng-show -->
+    <button ng-click="showMessage = !showMessage">Toggle Message</button>
+    <p ng-show="showMessage">This is a toggleable message!</p><br>
+
+    <!-- ng-if -->
+    <button ng-click="showContent = !showContent">Toggle Content</button>
+    <p ng-if="showContent">This content appears/disappears</p><br>
+
+    <!-- ng-class -->
+    <p ng-class="{'highlight': highlight}">This text can be highlighted</p>
+    <button ng-click="highlight = !highlight">Toggle Highlight</button><br>
+
+    <!-- ng-disabled -->
+    <input type="text" ng-disabled="disabled" ng-model="text"><br>
+    <button ng-click="disabled = !disabled">Toggle Disable</button><br>
+
+    <!-- ng-change -->
+    <input type="text" ng-model="text" ng-change="onChange()"><br>
+
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myCtrl", function($scope) {
+            $scope.name = '';
+            $scope.names = ['Alice', 'Bob'];
+            $scope.showMessage = false;
+            $scope.showContent = true;
+            $scope.highlight = false;
+            $scope.disabled = false;
+            $scope.text = '';
+
+            $scope.addName = function() {
+                if ($scope.name) {
+                    $scope.names.push($scope.name);
+                    $scope.name = '';
+                }
+            };
+
+            $scope.onChange = function() {
+                console.log('Text changed:', $scope.text);
+            };
+        });
+    </script>
+
+    <style>
+        .highlight { color: red; font-weight: bold; }
+    </style>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_20_Q2.js ---
+
+const express = require('express');
+const { MongoClient } = require('mongodb');
+const app = express();
+const uri = "mongodb://127.0.0.1:27017"; // MongoDB connection URL
+const client = new MongoClient(uri);
+
+// Connect to the MongoDB client
+async function connectToDatabase() {
+  await client.connect();
+  console.log("Connected to MongoDB");
+  return client.db("college"); // The database name is "college"
+}
+
+// Middleware to parse URL query parameters
+app.use(express.json());
+
+// Home route
+app.get('/', (req, res) => {
+  res.send("Welcome to the Student Management App");
+});
+
+// Create a student (using URL parameters)
+app.get('/add', async (req, res) => {
+  const { name, roll } = req.query;
+
+  if (!name || !roll) {
+    return res.send("Please provide both name and roll like ?name=John&roll=2");
+  }
+
+  try {
+    const db = await connectToDatabase();
+    const collection = db.collection("students");
+
+    const newStudent = { name, roll: parseInt(roll) };
+    const result = await collection.insertOne(newStudent);
+
+    res.send(`Student added with ID: ${result.insertedId}`);
+  } catch (err) {
+    res.send("Error adding student: " + err);
+  }
+});
+
+// Update student by name (using URL parameters)
+app.get('/update', async (req, res) => {
+  const { name, roll } = req.query;
+
+  if (!name || !roll) {
+    return res.send("Please provide both name and roll like ?name=Snehal&roll=3");
+  }
+
+  try {
+    const db = await connectToDatabase();
+    const collection = db.collection("students");
+
+    const result = await collection.updateOne(
+      { name: name }, // Find student by name
+      { $set: { roll: parseInt(roll) } } // Update roll number
+    );
+
+    if (result.modifiedCount > 0) {
+      res.send(`Student with name ${name} updated successfully.`);
+    } else {
+      res.send(`No student found with the name ${name}`);
+    }
+  } catch (err) {
+    res.send("Error updating student: " + err);
+  }
+});
+
+// Start the server
+app.listen(6700, () => {
+  console.log("Server running at http://localhost:6700");
+});
+
+/*
+
+http://localhost:3000/add?name=John&roll=2
+
+http://localhost:3000/update?name=Snehal&roll=3
+*/
+
+--- FSD-main/Slip_21_Q1.html ---
+
+<!DOCTYPE html>
+<html ng-app="studentApp">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="studentCtrl">
+
+    <h3>Student Details</h3>
+
+    <!-- Table to Display Student Details -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="student in students">
+                <td>{{student.name}}</td>
+                <td>{{student.age}}</td>
+                <td>{{student.grade}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        var app = angular.module('studentApp', []);
+        app.controller('studentCtrl', function($scope) {
+            // Array of student data
+            $scope.students = [
+                { name: 'Alice', age: 20, grade: 'A' },
+                { name: 'Bob', age: 22, grade: 'B' },
+                { name: 'Charlie', age: 21, grade: 'A' },
+                { name: 'David', age: 23, grade: 'C' },
+                { name: 'Eve', age: 19, grade: 'B' },
+                { name: 'Frank', age: 24, grade: 'A' },
+                { name: 'Grace', age: 22, grade: 'C' },
+                { name: 'Hannah', age: 21, grade: 'B' },
+                { name: 'Ivy', age: 20, grade: 'A' },
+                { name: 'Jack', age: 23, grade: 'C' }
+            ];
+        });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_2_Q1.html ---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Current Date and Time</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-app="timeApp" ng-controller="timeController">
+
+    <h1>Current Date and Time</h1>
+    
+    <!-- Display Current Date and Time -->
+    <p>{{ currentDateTime }}</p>
+
+    <script>
+        angular.module("timeApp", [])
+            .controller("timeController", function($scope, $interval) {
+                // Function to update the current time every second
+                function updateTime() {
+                    var currentDate = new Date();
+                    $scope.currentDateTime = currentDate.toLocaleString();
+                }
+
+                // Initial call to set the time
+                updateTime();
+
+                // Update time every second using $interval
+                $interval(updateTime, 1000);
+            });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_2_Q2.js ---
+
+const { MongoClient } = require("mongodb");
+const uri = "mongodb://127.0.0.1:27017";
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    await client.connect();
+    const db = client.db("mydb");
+    const collection = db.collection("Teacher");
+
+    // Select all records from the Teacher table
+    const allRecords = await collection.find().toArray();
+    console.log("All Teacher Records:");
+    console.table(allRecords);
+
+    // Find Teachers whose salary is greater than 20,000
+    const highSalary = await collection.find({ salary: { $gt: 20000 } }).toArray();
+    console.log("\nTeachers with Salary > 20000:");
+    console.table(highSalary);
+
+  } catch (err) {
+    console.error("Error:", err);
+  } finally {
+    await client.close();
+  }
+}
+
+run();
+
+
+/*
+use mydb
+
+db.Teacher.insertMany([
+  { name: "Sneha", subject: "English", salary: 23000 },
+  { name: "Raj", subject: "Math", salary: 18000 },
+  { name: "Anjali", subject: "Science", salary: 25000 }
+]);
+
+
+db.Teacher.find().pretty()
+
+
+
+npm init -y
+npm install mongodb
+
+node Slip_2_Q2.js
+
+
+*/
+
+--- FSD-main/Slip_3_Q1.js ---
+
+
+const http = require('http');
+
+http.createServer((req, res) => {
+  res.end('This is your Node.js server');
+}).listen(4000);
+
+console.log("Server running at http://localhost:4000");
+
+
+--- FSD-main/Slip_3_Q2.js ---
+
+const express = require('express');
+const app = express();
+
+app.use(express.urlencoded({ extended: true }));
+
+app.get('/register', (req, res) => {
+  res.send(`
+    <h2>Student Registration</h2>
+    <form method="POST" action="/register">
+      Name: <input type="text" name="name"><br><br>
+      Email: <input type="email" name="email"><br><br>
+      <button type="submit">Register</button>
+    </form>
+  `);
+});
+app.post('/register', (req, res) => {
+  const { name, email } = req.body;
+  res.send(`<h3>Registered successfully!</h3>Name: ${name}<br>Email: ${email}`);
+});
+app.listen(5000, () => {
+  console.log('Visit http://localhost:5000/register');
+});
+
+
+--- FSD-main/Slip_4_Q1.js ---
+
+const http = require('http');
+const querystring = require('querystring');
+
+http.createServer((req, res) => {
+  if (req.method === 'GET') {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+  res.end(`
+      <form method="POST">
+        <input type="text" name="str1" placeholder="First string" required />
+        <input type="text" name="str2" placeholder="Second string" required />
+        <button type="submit">Join</button>
+      </form>
+    `);
+  } else if (req.method === 'POST') {
+    let body = '';
+    req.on('data', chunk => body += chunk);
+    req.on('end', () => {
+      const { str1, str2 } = querystring.parse(body);
+     
+      res.setHeader('Content-Type', 'text/html');
+      res.end(`<p>Result: ${str1 + str2}</p><a href="/">Try again</a>`);
+    });
+  }
+}).listen(2232, () => {
+  console.log("Server is running on port 2232");
+});
+
+
+--- FSD-main/Slip_4_Q2_17_Q1.js ---
+
+const { MongoClient } = require("mongodb");
+
+// MongoDB connection URI
+const uri = "mongodb://127.0.0.1:27017";
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    await client.connect();
+    const db = client.db("mydb"); // your database name
+    const collection = db.collection("customer"); // collection name
+
+    // Insert multiple customer records
+    const result = await collection.insertMany([
+      { name: "Alice", city: "New York", age: 28 },
+      { name: "Bob", city: "Chicago", age: 32 },
+      { name: "Charlie", city: "San Francisco", age: 25 }
+    ]);
+
+    // Show the result object in console
+    console.log("Inserted Records Result:");
+    console.log(result);
+
+  } catch (err) {
+    console.error("Error:", err);
+  } finally {
+    await client.close();
+  }
+}
+
+run();
+
+
+--- FSD-main/Slip_5_Q1.js ---
+
+const { MongoClient } = require("mongodb");
+
+// MongoDB connection URI
+const uri = "mongodb://127.0.0.1:27017";
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    // Connect to MongoDB
+    await client.connect();
+    console.log("Connected to MongoDB!");
+
+    // Create college database
+    const db = client.db("collegeDB");  // Creating the database (it will be created when we insert data)
+
+    // Create students collection
+    const collection = db.collection("students");
+
+    // Insert sample student records
+    const result = await collection.insertMany([
+      { name: "John", age: 20, course: "Computer Science" },
+      { name: "Emily", age: 22, course: "Mechanical Engineering" },
+      { name: "Michael", age: 21, course: "Civil Engineering" }
+    ]);
+
+    console.log("Inserted Student Records:");
+    console.log(result);
+
+    // To check if the collection is created and data is inserted
+    const students = await collection.find().toArray();
+    console.log("\nStudents in College Database:");
+    console.table(students);
+
+  } catch (err) {
+    console.error("Error:", err);
+  } finally {
+    await client.close();
+  }
+}
+
+run();
+
+
+--- FSD-main/Slip_5_Q2.js ---
+
+// app.js
+const http = require('http');
+const { getCurrentDateTime } = require('./modules'); // Import the function from modules.js
+
+// Create a server
+const server = http.createServer((req, res) => {
+    res.writeHead(200, { 'Content-Type': 'text/plain' });
+    res.end(`Current Date and Time: ${getCurrentDateTime()}`); // Use the function from modules.js
+});
+
+// Start the server on port 3000
+server.listen(3500, () => {
+    console.log('Server is running at http://localhost:3500');
+});
+
+
+// modules.js
+function getCurrentDateTime() {
+    const currentDate = new Date();
+    return currentDate.toLocaleString(); 
+}
+
+module.exports = {
+    getCurrentDateTime
+};
+
+
+--- FSD-main/Slip_6_21_Q2.js ---
+
+
+const events = require('events');
+
+const eventEmitter = new events.EventEmitter();
+
+function onMessageReceived(msg) {
+  console.log(`Event Received: ${msg}`);
+}
+
+eventEmitter.on('message', onMessageReceived);
+
+setInterval(() => {
+
+  eventEmitter.emit('message', 'Hello! This is an event-driven message.');
+}, 2000);
+
+
+--- FSD-main/Slip_6_Q1.js ---
+
+const { MongoClient } = require("mongodb");
+const uri = "mongodb://127.0.0.1:27017";
+const client = new MongoClient(uri);
+
+async function run() {
+  try {
+    await client.connect();
+    const db = client.db("MovieDB");
+    const collection = db.collection("movies");
+
+    const result = await collection.insertMany([
+      { title: "Inception", director: "Christopher Nolan", year: 2010 },
+      { title: "Interstellar", director: "Christopher Nolan", year: 2014 },
+      { title: "The Dark Knight", director: "Christopher Nolan", year: 2008 }
+    ]);
+
+    console.log("Inserted Movie Records:");
+    console.log(result);
+
+    const movies = await collection.find().toArray();
+    console.log("\nAll Movies in Database:");
+    console.table(movies);
+
+  } catch (err) {
+    console.error("Error:", err);
+  } finally {
+    await client.close();
+  }
+}
+
+run();
+
+
+--- FSD-main/Slip_7_Q1.html ---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-app="studentApp" ng-controller="studentController">
+
+    <h1>Student Details</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Course</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="student in students">
+                <td>{{ student.rollNo }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.age }}</td>
+                <td>{{ student.course }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        angular.module('studentApp', [])
+            .controller('studentController', function($scope) {
+                // Array to store student details
+                $scope.students = [
+                    { rollNo: 1, name: 'John Doe', age: 20, course: 'Mathematics' },
+                    { rollNo: 2, name: 'Jane Smith', age: 22, course: 'Physics' },
+                    { rollNo: 3, name: 'Mark Johnson', age: 21, course: 'Chemistry' },
+                    { rollNo: 4, name: 'Emily Davis', age: 19, course: 'Biology' },
+                    { rollNo: 5, name: 'Michael Brown', age: 23, course: 'Computer Science' },
+                    { rollNo: 6, name: 'Sarah Wilson', age: 20, course: 'Mathematics' },
+                    { rollNo: 7, name: 'David Clark', age: 24, course: 'Physics' },
+                    { rollNo: 8, name: 'Anna Lewis', age: 22, course: 'Chemistry' },
+                    { rollNo: 9, name: 'James Walker', age: 21, course: 'Biology' },
+                    { rollNo: 10, name: 'Laura Hall', age: 19, course: 'Computer Science' }
+                ];
+            });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_7_Q2.js ---
+
+const express = require('express');
+const path = require('path');
+const app = express();
+
+app.get('/', (req, res) => {
+    res.send(`
+        <h2>Download File</h2>
+        <a href="/download">Click here to download the file</a>
+    `);
+});
+
+app.get('/download', (req, res) => {
+    const filePath = path.join(__dirname, 'abc.txt');
+    res.download(filePath, 'myFile.txt', (err) => {
+        if (err) {
+            res.status(500).send('File download failed!');
+        }
+    });
+});
+
+app.listen(2000, () => {
+    console.log('Server running at http://localhost:2000/');
+});
+
+
+--- FSD-main/Slip_8_Q1.html ---
+
+<!--<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html lang="en" ng-app="syllabusApp">
+<head>
+    <meta charset="UTF-8">
+    <title>M.Sc (CS) Sem-II Syllabus</title>
+    <base href="/">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
+</head>
+<body>
+
+    
+    <h2>M.Sc (CS) Sem-II Subjects</h2>
+    <div>
+        <a href="#!/subject1">Subject 1</a> |
+        <a href="#!/subject2">Subject 2</a> |
+        <a href="#!/subject3">Subject 3</a> |
+        <a href="#!/subject4">Subject 4</a>
+    </div>
+
+    <div ng-view style="margin-top: 20px;"></div>
+
+    <script>
+        angular.module('syllabusApp', ['ngRoute'])
+        .config(function($routeProvider) {
+            $routeProvider
+                .when('/subject1', {
+                    template: `
+                        <h3>Subject 1: Advanced Data Mining & Warehousing</h3>
+                        <p>Topics: Frequent Itemsets, Association Rules, Graph Mining, Sequence Mining, etc.</p>
+                    `
+                })
+                .when('/subject2', {
+                    template: `
+                        <h3>Subject 2: Mobile App Development</h3>
+                        <p>Topics: Android Studio, UI Design, Intents, SQLite, Fragments, Notifications, etc.</p>
+                    `
+                })
+                .when('/subject3', {
+                    template: `
+                        <h3>Subject 3: Full Stack Development</h3>
+                        <p>Topics: Node.js, Express, MongoDB, Angular, Routing, JWT, API Handling, etc.</p>
+                    `
+                })
+                .when('/subject4', {
+                    template: `
+                        <h3>Subject 4: Cyber Security</h3>
+                        <p>Topics: PGP, MIME, S/MIME, Firewalls, Cryptography, Authentication Protocols, etc.</p>
+                    `
+                })
+                .otherwise({
+                    redirectTo: '/subject1'
+
+                    });
+            });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>M.Sc (CS) Sem-II Syllabus</title>
+  <script src="angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+  <script>
+    angular.module("myApp", ["ngRoute"])
+    .config(function($routeProvider) {
+      $routeProvider
+        .when("/", { template: "<h2>Welcome!</h2><p>Click a subject to view syllabus.</p>" })
+        .when("/ds", { template: "<h2>Data Structures</h2><p>Stacks, Queues, Trees, Graphs</p>" })
+        .when("/os", { template: "<h2>Operating Systems</h2><p>Processes, Scheduling, Memory</p>" })
+        .when("/dbms", { template: "<h2>DBMS</h2><p>SQL, Normalization, Transactions</p>" });
+    });
+  </script>
+</head>
+<body>
+
+  <h1>M.Sc (CS) Sem-II</h1>
+
+  <p>
+    <a href="#!/">Home</a> 
+    <a href="#!/ds">Data Structures</a> 
+    <a href="#!/os">Operating Systems</a> 
+    <a href="#!/dbms">DBMS</a>
+  </p>
+
+  <div ng-view></div>
+
+</body>
+</html>
+
+--- FSD-main/Slip_8_Q2.js ---
+
+
+
+--- FSD-main/Slip_9_Q1.html ---
+
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-click Alert Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="myCtrl">
+
+    <button ng-click="showMessage()">Click Me</button>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.showMessage = function() {
+                alert("Hello! You clicked the button.");
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+--- FSD-main/Slip_9_Q2.js ---
+
+
+
+// module.js
+
+const reverseNumber = (num) => {
+    return parseInt(num.toString().split('').reverse().join(''));
+  };
+  
+  const isPalindrome = (num) => {
+    return num === reverseNumber(num);
+  };
+  
+    module.exports = { reverseNumber, isPalindrome };
+  
+
+
+
+// app.js
+
+const http = require('http');
+const url = require('url');
+const { reverseNumber, isPalindrome } = require('./module');  // Importing the custom module
+
+const server = http.createServer((req, res) => {
+  const query = url.parse(req.url, true).query;
+  const num = parseInt(query.number);
+
+  res.writeHead(200, { 'Content-Type': 'text/html' });
+
+  if (!num) {
+    res.end(`
+      <h2>Palindrome and Reverse Number Check</h2>
+      <form method="get">
+        Enter a number: <input type="text" name="number" />
+        <button type="submit">Check</button>
+      </form>
+    `);
+  } else {
+    const reversed = reverseNumber(num);
+    const palindrome = isPalindrome(num);
+
+    res.end(`
+      <h2>Number: ${num}</h2>
+      <h3>Reversed: ${reversed}</h3>
+      <h3>Palindrome: ${palindrome ? 'Yes' : 'No'}</h3>
+      <a href="/">Try another</a>
+    `);
+  }
+}).listen(3900, () => {
+  console.log("Server is running at http://localhost:3900");
+});
