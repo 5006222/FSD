@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="mathApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic Arithmetic Operations</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="mathCtrl">
+
+    <h3>Enter Two Numbers</h3>
+    Number 1: <input type="number" ng-model="num1"><br><br>
+    Number 2: <input type="number" ng-model="num2"><br><br>
+
+    <button ng-click="calculate()">Calculate</button><br><br>
+
+    <h4>Results:</h4>
+    Addition: {{additionResult}}<br>
+    Multiplication: {{multiplicationResult}}
+
+    <script>
+        // Create the module
+        var app = angular.module('mathApp', []);
+
+        // Service to handle arithmetic operations
+        app.service('mathOperation', function() {
+            this.add = function(a, b) {
+                return a + b;
+            };
+
+            this.multiply = function(a, b) {
+                return a * b;
+            };
+        });
+
+        // Controller to interact with the view
+        app.controller('mathCtrl', function($scope, mathOperation) {
+            $scope.calculate = function() {
+                // Perform arithmetic operations using the service
+                $scope.additionResult = mathOperation.add($scope.num1, $scope.num2);
+                $scope.multiplicationResult = mathOperation.multiply($scope.num1, $scope.num2);
+            };
+        });
+    </script>
+
+</body>
+</html>

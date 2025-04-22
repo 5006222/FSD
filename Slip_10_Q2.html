@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="validationApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Username Validation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="ValidationController">
+
+    <h2>Username and Password Validation</h2>
+
+    <form ng-submit="validateForm()">
+        <label>Username:</label>
+        <input type="text" ng-model="username"><br><br>
+
+        <label>Password:</label>
+        <input type="password" ng-model="password"><br><br>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p style="color: green;" ng-if="message">{{message}}</p>
+
+    <script>
+        var app = angular.module('validationApp', []);
+        app.controller('ValidationController', function($scope) {
+            $scope.username = "";
+            $scope.password = "";
+            $scope.message = "";
+
+            $scope.validateForm = function() {
+                if (!$scope.username) {
+                    alert("Enter username");
+                } else if ($scope.username.length < 3) {
+                    alert("Username is too short");
+                } else if (!$scope.password || $scope.password.length < 8) {
+                    alert("Password must be at least 8 characters");
+                } else {
+                    $scope.message = "Valid username";
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+<!--
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Username Validation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="myCtrl">
+
+    <input type="text" placeholder="Enter username" ng-model="username"><br><br>
+    <input type="password" placeholder="Enter password" ng-model="password"><br><br>
+    <button ng-click="check()">Submit</button>
+
+    <p>{{message}}</p>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+            $scope.check = function() {
+                if (!$scope.username) {
+                    alert("Enter username");
+                } else if ($scope.username.length < 3) {
+                    alert("Username is too short");
+                } else if (!$scope.password || $scope.password.length < 8) {
+                    alert("Password must be at least 8 characters");
+                } else {
+                    $scope.message = "Valid username";
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
+
+
+
+
+-->

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="myCtrl">
+
+    <!-- ng-model -->
+    Name: <input type="text" ng-model="name"><br>
+    <p>{{name}}</p>
+
+    <!-- ng-repeat -->
+    <ul>
+        <li ng-repeat="name in names">{{name}}</li>
+    </ul>
+    <button ng-click="addName()">Add Name</button><br>
+
+    <!-- ng-show -->
+    <button ng-click="showMessage = !showMessage">Toggle Message</button>
+    <p ng-show="showMessage">This is a toggleable message!</p><br>
+
+    <!-- ng-if -->
+    <button ng-click="showContent = !showContent">Toggle Content</button>
+    <p ng-if="showContent">This content appears/disappears</p><br>
+
+    <!-- ng-class -->
+    <p ng-class="{'highlight': highlight}">This text can be highlighted</p>
+    <button ng-click="highlight = !highlight">Toggle Highlight</button><br>
+
+    <!-- ng-disabled -->
+    <input type="text" ng-disabled="disabled" ng-model="text"><br>
+    <button ng-click="disabled = !disabled">Toggle Disable</button><br>
+
+    <!-- ng-change -->
+    <input type="text" ng-model="text" ng-change="onChange()"><br>
+
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myCtrl", function($scope) {
+            $scope.name = '';
+            $scope.names = ['Alice', 'Bob'];
+            $scope.showMessage = false;
+            $scope.showContent = true;
+            $scope.highlight = false;
+            $scope.disabled = false;
+            $scope.text = '';
+
+            $scope.addName = function() {
+                if ($scope.name) {
+                    $scope.names.push($scope.name);
+                    $scope.name = '';
+                }
+            };
+
+            $scope.onChange = function() {
+                console.log('Text changed:', $scope.text);
+            };
+        });
+    </script>
+
+    <style>
+        .highlight { color: red; font-weight: bold; }
+    </style>
+
+</body>
+</html>

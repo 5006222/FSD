@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <style>
+        .error { color: red; }
+    </style>
+</head>
+<body ng-app="studentApp" ng-controller="studentController">
+
+    <h1>Student Registration Form</h1>
+
+    <form name="registrationForm" ng-submit="submitForm()" novalidate>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="firstName" ng-model="student.firstName" name="firstName" ng-pattern="/^[A-Za-z]+$/" required>
+        <span class="error" ng-show="registrationForm.firstName.$touched && registrationForm.firstName.$invalid">First name must contain only alphabets.</span><br><br>
+
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="lastName" ng-model="student.lastName" name="lastName" ng-pattern="/^[A-Za-z]+$/" required>
+        <span class="error" ng-show="registrationForm.lastName.$touched && registrationForm.lastName.$invalid">Last name must contain only alphabets.</span><br><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" ng-model="student.age" name="age" min="18" max="50" required>
+        <span class="error" ng-show="registrationForm.age.$touched && registrationForm.age.$invalid">Age must be between 18 and 50.</span><br><br>
+
+        <button type="submit" ng-disabled="registrationForm.$invalid">Submit</button>
+    </form>
+
+    <script>
+        angular.module("studentApp", [])
+            .controller("studentController", function($scope) {
+                // Function to handle form submission
+                $scope.submitForm = function() {
+                    if ($scope.registrationForm.$valid) {
+                        alert("Form Submitted Successfully!");
+                    } else {
+                        alert("Please fill out the form correctly.");
+                    }
+                };
+            });
+    </script>
+
+</body>
+</html>

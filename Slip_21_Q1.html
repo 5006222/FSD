@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html ng-app="studentApp">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="studentCtrl">
+
+    <h3>Student Details</h3>
+
+    <!-- Table to Display Student Details -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="student in students">
+                <td>{{student.name}}</td>
+                <td>{{student.age}}</td>
+                <td>{{student.grade}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        var app = angular.module('studentApp', []);
+        app.controller('studentCtrl', function($scope) {
+            // Array of student data
+            $scope.students = [
+                { name: 'Alice', age: 20, grade: 'A' },
+                { name: 'Bob', age: 22, grade: 'B' },
+                { name: 'Charlie', age: 21, grade: 'A' },
+                { name: 'David', age: 23, grade: 'C' },
+                { name: 'Eve', age: 19, grade: 'B' },
+                { name: 'Frank', age: 24, grade: 'A' },
+                { name: 'Grace', age: 22, grade: 'C' },
+                { name: 'Hannah', age: 21, grade: 'B' },
+                { name: 'Ivy', age: 20, grade: 'A' },
+                { name: 'Jack', age: 23, grade: 'C' }
+            ];
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="productApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="productCtrl">
+
+    <h3>Enter Product Details</h3>
+
+    Product Name: <input type="text" ng-model="productName"><br>
+    <span ng-show="nameError" style="color:red;">Invalid product name</span><br><br>
+
+    Price (₹): <input type="number" ng-model="price"><br>
+    <span ng-show="priceError" style="color:red;">Price must be between ₹100 and ₹10,000</span><br><br>
+
+    <button ng-click="submit()">Add Product</button><br><br>
+
+    <p ng-show="successMessage" style="color:green;">Product added successfully!</p>
+
+    <script>
+        var app = angular.module('productApp', []);
+        app.controller('productCtrl', function($scope) {
+            $scope.submit = function() {
+                $scope.nameError = false;
+                $scope.priceError = false;
+                $scope.successMessage = false;
+
+                // Validate product name (only letters and spaces)
+                if (!$scope.productName || !/^[a-zA-Z ]+$/.test($scope.productName)) {
+                    $scope.nameError = true;
+                    return;
+                }
+
+                // Validate price (100 to 10000)
+                if (!$scope.price || $scope.price < 100 || $scope.price > 10000) {
+                    $scope.priceError = true;
+                    return;
+                }
+
+                // If valid
+                $scope.successMessage = true;
+            };
+        });
+    </script>
+
+</body>
+</html>

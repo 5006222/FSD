@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Validation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="myCtrl">
+
+    <h3>Enter Your Details</h3>
+
+    Name: <input type="text" ng-model="name"><br><br>
+    Mobile: <input type="text" ng-model="mobile"><br><br>
+    Pin Code: <input type="text" ng-model="pincode"><br><br>
+    Email: <input type="text" ng-model="email"><br><br>
+    Address: <input type="text" ng-model="address"><br><br>
+
+    <button ng-click="validate()">Submit</button>
+
+    <p>{{message}}</p>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('myCtrl', function($scope) {
+
+            $scope.validate = function() {
+                // Name: only characters
+                if (!$scope.name || !/^[a-zA-Z ]+$/.test($scope.name)) {
+                    alert("Name should contain characters only");
+                    return;
+                }
+
+                // Mobile: exactly 10 digits
+                if (!$scope.mobile || !/^\d{10}$/.test($scope.mobile)) {
+                    alert("Mobile number must be 10 digits");
+                    return;
+                }
+
+                // Pin code: exactly 6 digits
+                if (!$scope.pincode || !/^\d{6}$/.test($scope.pincode)) {
+                    alert("Pin code must be 6 digits");
+                    return;
+                }
+
+                // Email: must contain exactly one @ and one .
+                let atCount = ($scope.email.match(/@/g) || []).length;
+                let dotCount = ($scope.email.match(/\./g) || []).length;
+                if (atCount !== 1 || dotCount !== 1) {
+                    alert("Email must contain exactly one '@' and one '.'");
+                    return;
+                }
+
+                // Address check
+                if ($scope.address !== "SPPU M.Sc. Computer Science Syllabus 2023-24") {
+                    alert("Address must be: SPPU M.Sc. Computer Science Syllabus 2023-24");
+                    return;
+                }
+
+                // All ok
+                $scope.message = "All details are valid!";
+            };
+        });
+    </script>
+
+</body>
+</html>

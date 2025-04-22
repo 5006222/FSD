@@ -1,0 +1,121 @@
+<!--<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html lang="en" ng-app="syllabusApp">
+<head>
+    <meta charset="UTF-8">
+    <title>M.Sc (CS) Sem-II Syllabus</title>
+    <base href="/">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.min.js"></script>
+</head>
+<body>
+
+    
+    <h2>M.Sc (CS) Sem-II Subjects</h2>
+    <div>
+        <a href="#!/subject1">Subject 1</a> |
+        <a href="#!/subject2">Subject 2</a> |
+        <a href="#!/subject3">Subject 3</a> |
+        <a href="#!/subject4">Subject 4</a>
+    </div>
+
+    <div ng-view style="margin-top: 20px;"></div>
+
+    <script>
+        angular.module('syllabusApp', ['ngRoute'])
+        .config(function($routeProvider) {
+            $routeProvider
+                .when('/subject1', {
+                    template: `
+                        <h3>Subject 1: Advanced Data Mining & Warehousing</h3>
+                        <p>Topics: Frequent Itemsets, Association Rules, Graph Mining, Sequence Mining, etc.</p>
+                    `
+                })
+                .when('/subject2', {
+                    template: `
+                        <h3>Subject 2: Mobile App Development</h3>
+                        <p>Topics: Android Studio, UI Design, Intents, SQLite, Fragments, Notifications, etc.</p>
+                    `
+                })
+                .when('/subject3', {
+                    template: `
+                        <h3>Subject 3: Full Stack Development</h3>
+                        <p>Topics: Node.js, Express, MongoDB, Angular, Routing, JWT, API Handling, etc.</p>
+                    `
+                })
+                .when('/subject4', {
+                    template: `
+                        <h3>Subject 4: Cyber Security</h3>
+                        <p>Topics: PGP, MIME, S/MIME, Firewalls, Cryptography, Authentication Protocols, etc.</p>
+                    `
+                })
+                .otherwise({
+                    redirectTo: '/subject1'
+
+                    });
+            });
+    </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <title>M.Sc (CS) Sem-II Syllabus</title>
+  <script src="angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular-route.min.js"></script>
+  <script>
+    angular.module("myApp", ["ngRoute"])
+    .config(function($routeProvider) {
+      $routeProvider
+        .when("/", { template: "<h2>Welcome!</h2><p>Click a subject to view syllabus.</p>" })
+        .when("/ds", { template: "<h2>Data Structures</h2><p>Stacks, Queues, Trees, Graphs</p>" })
+        .when("/os", { template: "<h2>Operating Systems</h2><p>Processes, Scheduling, Memory</p>" })
+        .when("/dbms", { template: "<h2>DBMS</h2><p>SQL, Normalization, Transactions</p>" });
+    });
+  </script>
+</head>
+<body>
+
+  <h1>M.Sc (CS) Sem-II</h1>
+
+  <p>
+    <a href="#!/">Home</a> 
+    <a href="#!/ds">Data Structures</a> 
+    <a href="#!/os">Operating Systems</a> 
+    <a href="#!/dbms">DBMS</a>
+  </p>
+
+  <div ng-view></div>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="marksApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Student Marks</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="marksCtrl">
+
+    <h3>Enter Marks for 5 Subjects</h3>
+
+    Subject 1: <input type="number" ng-model="marks1"><br><br>
+    Subject 2: <input type="number" ng-model="marks2"><br><br>
+    Subject 3: <input type="number" ng-model="marks3"><br><br>
+    Subject 4: <input type="number" ng-model="marks4"><br><br>
+    Subject 5: <input type="number" ng-model="marks5"><br><br>
+
+    <button ng-click="calculate()">Calculate</button><br><br>
+
+    <h4>Total Marks: {{total}}</h4>
+    <h4>Average Marks: {{average}}</h4>
+
+    <script>
+        var app = angular.module('marksApp', []);
+
+        // Service to calculate total and average
+        app.service('marksService', function() {
+            this.calculateTotal = function(marks) {
+                return marks.reduce((acc, mark) => acc + mark, 0);
+            };
+            
+            this.calculateAverage = function(total) {
+                return total / 5;
+            };
+        });
+
+        // Controller to handle user input and display results
+        app.controller('marksCtrl', function($scope, marksService) {
+            $scope.calculate = function() {
+                var marks = [$scope.marks1, $scope.marks2, $scope.marks3, $scope.marks4, $scope.marks5];
+                
+                var total = marksService.calculateTotal(marks);
+                $scope.total = total;
+                $scope.average = marksService.calculateAverage(total);
+            };
+        });
+    </script>
+
+</body>
+</html>

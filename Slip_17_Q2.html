@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>AngularJS Data Binding & Event Handling</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body>
+
+    <!-- Controller 1: One-way Data Binding -->
+    <div ng-controller="oneWayCtrl">
+        <h3>One-way Data Binding</h3>
+        <p>Message from Controller 1: {{message}}</p>
+    </div>
+
+    <!-- Controller 2: Two-way Data Binding -->
+    <div ng-controller="twoWayCtrl">
+        <h3>Two-way Data Binding</h3>
+        <input type="text" ng-model="name">
+        <p>Hello, {{name}}!</p>
+    </div>
+
+    <!-- Controller 3: Event Handling -->
+    <div ng-controller="eventCtrl">
+        <h3>Event Handling</h3>
+        <button ng-click="changeMessage()">Click me to change the message</button>
+        <p>{{eventMessage}}</p>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+
+        // Controller 1: One-way Data Binding
+        app.controller('oneWayCtrl', function($scope) {
+            $scope.message = "This is a message from Controller 1!";
+        });
+
+        // Controller 2: Two-way Data Binding
+        app.controller('twoWayCtrl', function($scope) {
+            $scope.name = "Student";  // Initially set to "Student"
+        });
+
+        // Controller 3: Event Handling
+        app.controller('eventCtrl', function($scope) {
+            $scope.eventMessage = "Click the button to change this message.";
+            $scope.changeMessage = function() {
+                $scope.eventMessage = "Message changed successfully!";
+            };
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html ng-app="locationApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Location of Current Web Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="locationCtrl">
+
+    <h3>Your Current Location</h3>
+    <button ng-click="getLocation()">Get Location</button><br><br>
+
+    <p ng-show="latitude && longitude">
+        Latitude: {{latitude}}<br>
+        Longitude: {{longitude}}
+    </p>
+
+    <p ng-show="errorMessage">{{errorMessage}}</p>
+
+    <script>
+        var app = angular.module('locationApp', []);
+
+        app.controller('locationCtrl', function($scope) {
+            $scope.getLocation = function() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        $scope.$apply(function() {
+                            $scope.latitude = position.coords.latitude;
+                            $scope.longitude = position.coords.longitude;
+                            $scope.errorMessage = null;
+                        });
+                    }, function(error) {
+                        $scope.$apply(function() {
+                            if (error.code == 1) {
+                                $scope.errorMessage = "Permission denied. Please allow location access.";
+                            } else if (error.code == 2) {
+                                $scope.errorMessage = "Location unavailable.";
+                            } else {
+                                $scope.errorMessage = "An unknown error occurred.";
+                            }
+                        });
+                    });
+                } else {
+                    $scope.errorMessage = "Geolocation is not supported by this browser.";
+                }
+            };
+        });
+    </script>
+
+</body>
+</html>
